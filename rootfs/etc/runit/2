@@ -1,0 +1,12 @@
+#!/bin/sh
+# runit stage 2 — service supervision
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+
+for f in /etc/rc.d/*.post.boot; do [ -f "$f" ] && . "$f"; done
+
+# Service supervision (future services via /var/service)
+/usr/sbin/runsvdir -P /var/service \
+  'log: ......................................................................................' &
+
+# Serial console login — exec keeps runit alive; restarts on logout
+exec /sbin/getty -L ttyS0 115200 vt100

@@ -1,0 +1,3 @@
+[submodule "pkghost"]
+	path = pkghost
+	url = git@github.com:Markynose/volna-packages.git

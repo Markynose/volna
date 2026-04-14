@@ -1,0 +1,31 @@
+<domain type="kvm">
+  <name>volna</name>
+  <memory unit="MiB">512</memory>
+  <vcpu>2</vcpu>
+  <os>
+    <type arch="x86_64" machine="pc-i440fx-9.2">hvm</type>
+    <boot dev="hd"/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <clock offset="utc"/>
+  <devices>
+    <disk type="file" device="disk">
+      <driver name="qemu" type="raw"/>
+      <source file="/home/mark/volna/volna.img"/>
+      <target dev="vda" bus="virtio"/>
+    </disk>
+    <interface type="user">
+      <model type="virtio"/>
+    </interface>
+    <console type="pty">
+      <target type="serial" port="0"/>
+    </console>
+    <graphics type="vnc" port="-1" autoport="yes" listen="127.0.0.1"/>
+    <video>
+      <model type="vga" vram="16384"/>
+    </video>
+  </devices>
+</domain>

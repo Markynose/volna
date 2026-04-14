@@ -1,0 +1,14 @@
+#!/bin/sh
+# runit stage 3 — shutdown
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+
+for f in /etc/rc.d/*.pre.shutdown; do [ -f "$f" ] && . "$f"; done
+
+/usr/bin/sv stop /var/service/* 2>/dev/null || true
+sync
+umount -a -r 2>/dev/null || true
+
+case "$1" in
+    0) poweroff -f ;;
+    6) reboot -f ;;
+esac

@@ -1,0 +1,22 @@
+#!/bin/sh
+# runit stage 1 — one-time system initialization
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+
+# Mount pseudo-filesystems (kernel may have done devtmpfs already)
+mount -t proc proc /proc 2>/dev/null || true
+mount -t sysfs sysfs /sys 2>/dev/null || true
+mount -t devtmpfs devtmpfs /dev 2>/dev/null || true
+mkdir -p /dev/pts
+mount -t devpts devpts /dev/pts 2>/dev/null || true
+mount -t tmpfs -o mode=0755,nosuid,nodev tmpfs /run 2>/dev/null || true
+
+# Remount root rw
+mount -o remount,rw / 2>/dev/null || true
+
+# Hostname
+[ -f /etc/hostname ] && hostname -F /etc/hostname
+
+# pre-boot hooks
+for f in /etc/rc.d/*.pre.boot; do [ -f "$f" ] && . "$f"; done
+
+touch /dev/null 2>/dev/null || true

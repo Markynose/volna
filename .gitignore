@@ -1,0 +1,12 @@
+volna.img
+CLAUDE.md
+# Claude Code session data
+.claude/
+# Kernel source tree and tarballs — not part of distro repo
+linux-*/
+*.tar.xz
+*.tar.gz
+# Password hashes — never commit
+rootfs/etc/shadow
+# APK runtime lock file
+rootfs/lib/apk/db/lock
